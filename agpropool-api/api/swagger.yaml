@@ -1,0 +1,624 @@
+---
+swagger: "2.0"
+info:
+  description: "API Layer for AgProPool application"
+  version: "1.0.0"
+  title: "AgProPool API"
+host: "api.agpropool.com"
+basePath: "/v1"
+tags:
+  - name: "farmer"
+    description: "APIs for Farmers"
+  - name: "agent"
+    description: "APIs for Agents"
+  - name: "inventory"
+    description: "APIs for Inventory"
+  - name: "transactions"
+    description: "APIs for Transactions"
+  - name: "crops"
+    description: "APIs for Crops"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /farmer:
+    post:
+      tags:
+        - "farmer"
+      summary: "Add a new farmer to the pool"
+      description: ""
+      operationId: "addFarmer"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Farmer object that needs to be added to the pool"
+          required: true
+          schema:
+            $ref: "#/definitions/Farmer"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Farmer"
+    put:
+      tags:
+        - "farmer"
+      summary: "Update an existing farmer"
+      description: ""
+      operationId: "updateFarmer"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Farmer object that needs to be updated in the pool"
+          required: true
+          schema:
+            $ref: "#/definitions/Farmer"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Farmer not found"
+        "405":
+          description: "Validation exception"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Farmer"
+  /listFarmers:
+    get:
+      tags:
+        - "farmer"
+      summary: "List All Farmers"
+      description: "List all farmers"
+      operationId: "listAllFarmers"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Farmer"
+        "400":
+          description: "Invalid status value"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Farmer"
+  /farmers/{farmerId}:
+    get:
+      tags:
+        - "farmer"
+      summary: "Returns a farmer"
+      description: ""
+      operationId: "getFarmerById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "farmerId"
+          in: "path"
+          description: "Get Farmer By Id"
+          required: true
+          type: "integer"
+          format: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Farmer"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Farmer not found"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Farmer"
+    delete:
+      tags:
+        - "farmer"
+      summary: "Deletes a farmer"
+      description: ""
+      operationId: "deleteFarmer"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "farmerId"
+          in: "path"
+          description: "Farmer id to delete"
+          required: true
+          type: "integer"
+          format: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Farmer not found"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Farmer"
+  /farmerAgent:
+    post:
+      tags:
+        - "agent"
+      summary: "Create farmer agent"
+      description: "Create farmer agent"
+      operationId: "createAgent"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Created agent object"
+          required: true
+          schema:
+            $ref: "#/definitions/FarmerAgent"
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Agent"
+  /addCropsWithList:
+    post:
+      tags:
+        - "crops"
+      summary: "Creates list of crops with given input array"
+      description: ""
+      operationId: "createCropsWithListInput"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "List of crop objects"
+          required: true
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Crop"
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Crops"
+  /crop:
+    post:
+      tags:
+        - "crops"
+      summary: "Create crop object "
+      description: ""
+      operationId: "createCrop"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "A crop objects"
+          required: true
+          schema:
+            $ref: "#/definitions/Crop"
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Crops"
+  /crops/{cropId}:
+    delete:
+      tags:
+        - "crops"
+      summary: "Deletes a crop"
+      description: ""
+      operationId: "deleteCrop"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "cropId"
+          in: "path"
+          description: "Crop id to delete"
+          required: true
+          type: "integer"
+          format: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Crop not found"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Crops"
+  /listCrops:
+    get:
+      tags:
+        - "crops"
+      summary: "List All Available Crops"
+      description: "List all Available Crops"
+      operationId: "listAllCrops"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Crop"
+        "400":
+          description: "Invalid status value"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Crops"
+  /agent/login:
+    get:
+      tags:
+        - "agent"
+      summary: "Logs agentinto the system"
+      description: ""
+      operationId: "loginAgent"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "username"
+          in: "query"
+          description: "The user name for login"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "query"
+          description: "The password for login in clear text"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "string"
+        "400":
+          description: "Invalid username/password supplied"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Agent"
+  /agent/logout:
+    get:
+      tags:
+        - "agent"
+      summary: "Logs out current logged in agent's session"
+      description: ""
+      operationId: "logoutAgent"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Agent"
+  /agent/{agentname}:
+    get:
+      tags:
+        - "agent"
+      summary: "Get agent by agent name"
+      description: ""
+      operationId: "getAgentByName"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "agentname"
+          in: "path"
+          description: "The name that needs to be fetched."
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/FarmerAgent"
+        "400":
+          description: "Invalid agent name supplied"
+        "404":
+          description: "Agent not found"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Agent"
+    put:
+      tags:
+        - "agent"
+      summary: "Updated Agent"
+      description: "Update Agent"
+      operationId: "updateAgent"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "agentname"
+          in: "path"
+          description: "name that need to be updated"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated agent object"
+          required: true
+          schema:
+            $ref: "#/definitions/FarmerAgent"
+      responses:
+        "400":
+          description: "Invalid agent supplied"
+        "404":
+          description: "Agent not found"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Agent"
+    delete:
+      tags:
+        - "agent"
+      summary: "Delete agent"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteAgent"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "agentname"
+          in: "path"
+          description: "The name that needs to be deleted"
+          required: true
+          type: "string"
+      responses:
+        "400":
+          description: "Invalid agentname supplied"
+        "404":
+          description: "Agent not found"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Agent"
+  /inventory:
+    get:
+      tags:
+        - "inventory"
+      summary: "List All Crops in the Inventory"
+      description: "List Crop Inventory"
+      operationId: "getInventory"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "date"
+          in: "query"
+          description: "from date"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CropWithQty"
+        "400":
+          description: "Invalid request"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Inventory"
+  /transaction:
+    post:
+      tags:
+        - "transactions"
+      summary: "Create transaction object "
+      description: ""
+      operationId: "createTransaction"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "A transaction object"
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        default:
+          description: "successful operation"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Transactions"
+  /transaction/{transactionId}:
+    delete:
+      tags:
+        - "transactions"
+      summary: "Delete transaction object "
+      description: ""
+      operationId: "deleteTransaction"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: true
+          type: "string"
+        - name: "transactionId"
+          in: "path"
+          description: "A transaction Id"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Transaction not found"
+      security:
+        - api_key: []
+      x-swagger-router-controller: "Transactions"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Farmer:
+    type: "object"
+    required:
+      - "name"
+    properties:
+      name:
+        type: "string"
+      gender:
+        type: "string"
+      age:
+        type: "integer"
+      village:
+        type: "string"
+      phone_number:
+        type: "string"
+      created_by:
+        type: "string"
+    example:
+      gender: "gender"
+      name: "name"
+      phone_number: "phone_number"
+      village: "village"
+      created_by: "created_by"
+      age: 0
+  FarmerAgent:
+    type: "object"
+    required:
+      - "name"
+    properties:
+      agent_id:
+        type: "string"
+      name:
+        type: "string"
+      gender:
+        type: "string"
+      age:
+        type: "integer"
+      village:
+        type: "string"
+      phone_number:
+        type: "string"
+    example:
+      agent_id: "agent_id"
+      gender: "gender"
+      name: "name"
+      phone_number: "phone_number"
+      village: "village"
+      age: 0
+  Crop:
+    type: "object"
+    required:
+      - "name"
+    properties:
+      crop_id:
+        type: "string"
+      name:
+        type: "string"
+    example:
+      name: "name"
+      crop_id: "crop_id"
+  CropWithQty:
+    type: "object"
+    required:
+      - "crop_id"
+    properties:
+      crop_id:
+        type: "string"
+      qty:
+        type: "integer"
+    example:
+      qty: 0
+      crop_id: "crop_id"
+  Transaction:
+    type: "object"
+    required:
+      - "farmer_id"
+    properties:
+      farmer_id:
+        type: "string"
+      date:
+        type: "string"
+        format: "date"
+      crops:
+        type: "array"
+        items:
+          $ref: "#/definitions/CropWithQty"
+      created_by:
+        type: "string"

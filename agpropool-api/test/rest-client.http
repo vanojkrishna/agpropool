@@ -1,0 +1,67 @@
+
+#Add a farmer agent
+POST http://localhost:8080/v1/farmerAgent
+Content-Type: application/json
+api_key: asd
+
+{
+  "agent_id": "80001",
+  "gender": "M",
+  "name": "Agent1",
+  "phone_number": "98765 12345",
+  "age": 25
+}
+###
+
+#Get Agent by Name
+http://localhost:8080/v1/agent/Agent1
+api_key: asd
+
+###
+
+#Add a Farmer
+POST http://localhost:8080/v1/farmer
+Content-Type: application/json
+api_key: asd
+
+{
+  "gender": "M",
+  "name": "farmer2",
+  "phone_number": "76876897971",
+  "village": "bengaluru",
+  "created_by": "Agent1",
+  "age": 34
+}
+###
+#Get Farmer by Id
+http://localhost:8080/v1/farmers/90001
+api_key: asd
+###
+#Add a Crop
+POST http://localhost:8080/v1/crop
+Content-Type: application/json
+api_key: asd
+
+{
+  "name": "Alu",
+  "crop_id": "1"
+}
+###
+POST http://localhost:8080/v1/crop
+Content-Type: application/json
+api_key: asd
+
+{
+  "name": "Wheat",
+  "crop_id": "2"
+}
+###
+#Get list of Crop
+GET http://localhost:8080/v1/listCrops
+api_key: asd
+
+###
+#Get inventory
+GET http://localhost:8080/v1/inventory
+api_key: asd
+date: 2020-06-28

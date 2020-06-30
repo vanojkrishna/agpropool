@@ -1,0 +1,23 @@
+{
+  "name": "agpropool-api",
+  "version": "1.0.0",
+  "description": "API Layer for AgProPool application",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.7.0",
+    "js-yaml": "^3.14.0",
+    "sqlite3": "^4.2.0",
+    "sqlite3-transactions": "0.0.5",
+    "swagger-tools": "^0.10.1",
+    "uuid": "^8.2.0"
+  }
+}
