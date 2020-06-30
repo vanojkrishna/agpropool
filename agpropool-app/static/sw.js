@@ -41,11 +41,9 @@ function savePostRequests(url, payload) {
 }
 
 function openDatabase() {
-  // if `flask-form` does not already exist in our browser (under our site), it is created
   var indexedDBOpenRequest = indexedDB.open("agpropool");
 
   indexedDBOpenRequest.onerror = function(error) {
-    // errpr creatimg db
     console.error("IndexedDB error:", error);
   };
 

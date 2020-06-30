@@ -17,30 +17,23 @@ if ("serviceWorker" in navigator) {
 
     navigator.serviceWorker.ready
       .then(function(registration) {
-        console.log("Service Worker Ready");
         return registration.sync.register("sendFormData");
       })
       .then(function() {
         console.log("sync event registered");
       })
       .catch(function() {
-        // system was unable to register for a sync,
-        // this could be an OS-level restriction
         console.log("sync registration failed");
       });
   });
 }
 function submitFunction(event) {
   event.preventDefault();
-  console.log("submitted", event);
   name = $("#name").val();
   age = $("#age").val();
   gender = $("input[name='gender']:checked").val();
   village = $("#village").val();
   phone = $("#phone").val();
-  console.log("values,", name, age, gender, village, phone);
-  $("#addFarmerForm").hide();
-  // send  to server
   var data = {
     name: name,
     age: Number(age),
@@ -62,9 +55,7 @@ function submitFunction(event) {
       if (!subscription) {
         // You do not have subscription
       }
-      // You have subscription.
-      // Send data to service worker
-      navigator.serviceWorker.controller.postMessage(msg); // <--- This line right here sends our data to sw.js
+      navigator.serviceWorker.controller.postMessage(msg);
     });
 
   $.ajax({
@@ -72,14 +63,18 @@ function submitFunction(event) {
     url: "http://localhost:8080/v1/farmer",
     contentType: "application/json",
     crossDomain: true,
+    dataType: "json",
     headers: { api_key: "abcd" },
     data: JSON.stringify(data),
     success: function(response) {
-      console.log(response);
-      console.log("data sent to server successfully");
+      $("#messageDiv").html(
+        "<div class='alert alert-danger w-100'>" + response + "</div>"
+      );
       $("#addFarmerForm")[0].reset();
     },
-    dataType: "json"
+    error: function() {
+      $("#addFarmerForm")[0].reset();
+    }
   });
   return false;
 }
