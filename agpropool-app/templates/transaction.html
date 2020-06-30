@@ -1,0 +1,190 @@
+<html>
+  <link rel="stylesheet" type="text/css" href="../static/style.css" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Farmer Form" />
+    <title>AgProPool - Transactions</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script type="text/javascript" src="../static/script.js"></script>
+  </head>
+  <body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="#">AgProPool</a>
+
+      <!-- Collapse button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#basicExampleNav"
+        aria-controls="basicExampleNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="basicExampleNav">
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="/">Farmers</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Transactions</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!--/.Navbar-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <!-- Default form subscription -->
+          <form
+            class="text-center border border-light p-5"
+            onsubmit="return addTransaction(event)"
+            id="addTransactionForm"
+          >
+            <p class="h4 mb-4">Add Transaction</p>
+            <input
+              class="form-control mb-4 datepicker"
+              type="date"
+              name="date"
+              id="txnDate"
+              placeholder="Date"
+            />
+            <select class="form-control mb-4" id="farmersList"> </select>
+            <div id="cropsDiv">
+              <div class="row">
+                <div class="col">
+                  <select class="form-control cropsdd"></select>
+                </div>
+                <div class="col">
+                  <input
+                    class="form-control mb-4"
+                    type="number"
+                    placeholder="Quantity in KG"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <select class="form-control cropsdd"></select>
+                </div>
+                <div class="col">
+                  <input
+                    class="form-control mb-4"
+                    type="number"
+                    placeholder="Quantity in KG"
+                  />
+                </div>
+              </div>
+            </div>
+            <a href="#" onclick="addMoreCrops()" class="mb-4 float-right"
+              >click to add more crops</a
+            >
+            <button
+              class="btn btn-info btn-block"
+              id="addTxnSubmit"
+              type="submit"
+            >
+              Add
+            </button>
+          </form>
+          <!-- Default form subscription -->
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <form
+            class="text-center border border-light p-5"
+            onsubmit="return getInventory(event)"
+            id="getInventoryForm"
+          >
+            <p class="h4 mb-4">Get Inventory</p>
+            <input
+              class="form-control mb-4 datepicker"
+              type="date"
+              name="date"
+              id="invDate"
+              placeholder="Date"
+            />
+            <button
+              class="btn btn-info btn-block"
+              id="getTxnSubmit"
+              type="submit"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+      <div id="resultDiv" class="row"></div>
+    </div>
+  </body>
+  <script>
+    var crops = [];
+    $(document).ready(function() {
+      prePopulate();
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/v1/listCrops",
+        contentType: "application/json",
+        crossDomain: true,
+        headers: { api_key: "abcd" },
+        success: function(response) {
+          crops = response;
+          $.each(response, function(i, item) {
+            $(".cropsdd").append(
+              $("<option>", {
+                value: item.crop_id,
+                text: item.name
+              })
+            );
+          });
+        },
+        dataType: "json"
+      });
+    });
+    function prePopulate() {
+      getFarmersList("farmersList");
+    }
+    function addMoreCrops() {
+      let optStr = "";
+      $.each(crops, function(i, item) {
+        optStr +=
+          "<option value='" + item.crop_id + "'>" + item.name + "</option>";
+      });
+      $("#cropsDiv").append(
+        `<div class="row">
+              <div class="col">
+                <select class="form-control cropsdd">` +
+          optStr +
+          `</select>
+              </div>
+              <div class="col">
+                <input
+                  class="form-control mb-4"
+                  type="number"
+                  name="date"
+                  placeholder="Quantity in KG"
+                />
+              </div>
+            </div>`
+      );
+    }
+  </script>
+</html>

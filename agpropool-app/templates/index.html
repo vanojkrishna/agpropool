@@ -1,0 +1,128 @@
+<html>
+  <link rel="stylesheet" type="text/css" href="../static/style.css" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Farmer Form" />
+    <title>AgProPool - Farmers</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script type="text/javascript" src="../static/script.js"></script>
+  </head>
+  <body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="#">AgProPool</a>
+
+      <!-- Collapse button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#basicExampleNav"
+        aria-controls="basicExampleNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="basicExampleNav">
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Farmers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/transaction">Transactions</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!--/.Navbar-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <!-- Default form subscription -->
+          <form
+            class="text-center border border-light p-5"
+            onsubmit="return submitFunction(event)"
+            id="addFarmerForm"
+          >
+            <p class="h4 mb-4">Add Farmer</p>
+            <input
+              class="form-control mb-4"
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name"
+            />
+            <input
+              class="form-control mb-4"
+              type="number"
+              id="age"
+              name="age"
+              min="18"
+              max="100"
+              placeholder="Age"
+            />
+            <div class="text-left mb-4">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="defaultInline1"
+                  name="gender"
+                  value="male"
+                />
+                <label class="custom-control-label" for="defaultInline1"
+                  >Male</label
+                >
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  class="custom-control-input"
+                  id="defaultInline2"
+                  name="gender"
+                  value="female"
+                />
+                <label class="custom-control-label" for="defaultInline2"
+                  >Female</label
+                >
+              </div>
+            </div>
+            <select class="form-control mb-4" id="village">
+              <option>Devanahalli</option>
+              <option>Hosakote</option>
+              <option>Nelamangala</option>
+            </select>
+            <input
+              class="form-control mb-4"
+              type="text"
+              name="phone"
+              id="phone"
+              placeholder="Phone"
+            />
+            <!-- Sign in button -->
+            <button class="btn btn-info btn-block" id="submit" type="submit">
+              Add
+            </button>
+          </form>
+          <!-- Default form subscription -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
