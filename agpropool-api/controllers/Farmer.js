@@ -6,7 +6,6 @@ var Farmer = require("../service/FarmerService");
 module.exports.addFarmer = function addFarmer(req, res, next) {
   var api_key = req.swagger.params["api_key"].value;
   var body = req.swagger.params["body"].value;
-
   Farmer.addFarmer(api_key, body)
     .then(function(response) {
       utils.writeJson(res, response);

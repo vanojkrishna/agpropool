@@ -22,12 +22,12 @@ api_key: asd
 #Add a Farmer
 POST http://localhost:8080/v1/farmer
 Content-Type: application/json
-api_key: asd
+api_key: abcd
 
 {
-  "gender": "M",
-  "name": "farmer2",
-  "phone_number": "76876897971",
+  "gender": "male",
+  "name": "farmer3",
+  "phone_number": "76876897972",
   "village": "bengaluru",
   "created_by": "Agent1",
   "age": 34

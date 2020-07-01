@@ -42,15 +42,22 @@ create_agents_sql = `CREATE TABLE farm_agent (
     phone_number TEXT NOT NULL UNIQUE
   )`;
 
-insert_example_sql = `insert into 
+insert_agent_sql = `insert into 
     farm_agent 
-    values(4567,'agent007','M',21,'98790 78908');`;
+    values(1,'Agent1','male',21,'9879078908');`;
 
 db.run(create_agents_sql, [], err => {
   if (err) {
     console.error(err.message);
   } else {
     console.log("Created 'farm_agent' table successfully");
+  }
+});
+db.run(insert_agent_sql, [], err => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log("Inserted agent successfully");
   }
 });
 
@@ -102,7 +109,18 @@ db.run(create_crop_sql, [], err => {
     console.log("Created 'crop' table successfully");
   }
 });
-
+insert_crop_sql = `INSERT INTO crop (crop_id,name)
+VALUES
+	("1","Alu"),
+	("2","Bhindi"),
+  ("3","Onion")`;
+db.run(insert_crop_sql, [], err => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log("Inserted crops successfully");
+  }
+});
 /* db.close((err) => {
     if (err) {
       console.error(err.message);
